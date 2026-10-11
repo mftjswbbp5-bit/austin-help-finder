@@ -33,4 +33,4 @@ Map view, more languages (Vietnamese, Chinese, Arabic), SMS version, AI assistan
 Listings are examples. Verify each organization's hours and rules before relying on them.
 
 ## Team
-Add names and roles here.
+Noura Oraif.
