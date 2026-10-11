@@ -20,17 +20,6 @@ Low-income families, newcomers and Spanish speakers, seniors, and anyone with li
 Plain HTML, CSS, and JavaScript in a single file (`index.html`). No build step, no dependencies, works offline once loaded.
 Matching logic: each service has a `req` list; a service shows when `req` is empty or any requirement matches the user's answers.
 
-## Run it
-Open `index.html` in a browser, or deploy the folder to Netlify/Vercel/GitHub Pages.
-
-## Sustainability
-Services live in one JSON-like array (`D` in index.html). Volunteers or partner nonprofits can update it by pull request. Hosting is free. Next: city-wide data from 211 and the City of Austin open data portal.
-
-## Roadmap
-Map view, more languages (Vietnamese, Chinese, Arabic), SMS version, AI assistant for plain-language eligibility help.
-
-## Honest note
-Listings are examples. Verify each organization's hours and rules before relying on them.
 
 ## Team
 Noura Oraif.
