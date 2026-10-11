@@ -16,10 +16,6 @@ Low-income families, newcomers and Spanish speakers, seniors, and anyone with li
 - Private: no accounts, no tracking, answers never leave the browser
 - Accessible: Atkinson Hyperlegible font, 44px touch targets, keyboard focus rings, dark mode, reduced-motion support
 
-## Tech stack
-Plain HTML, CSS, and JavaScript in a single file (`index.html`). No build step, no dependencies, works offline once loaded.
-Matching logic: each service has a `req` list; a service shows when `req` is empty or any requirement matches the user's answers.
-
 
 ## Team
 Noura Oraif.
