@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Austin Help Finder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f3;--ink:#14241e;--mute:#4a5b54;--card:#fff;--line:#c9d4ce;--acc:#1f3a8a;--accInk:#fff;--hi:#fde68a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1815;--ink:#eaf1ed;--mute:#a7b8b0;--card:#18251f;--line:#2e4038;--acc:#9db7ff;--accInk:#0f1815;--hi:#5b4b0f}}
+:root[data-theme="dark"]{--bg:#0f1815;--ink:#eaf1ed;--mute:#a7b8b0;--card:#18251f;--line:#2e4038;--acc:#9db7ff;--accInk:#0f1815;--hi:#5b4b0f}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 calc(1rem*var(--fs,1))/1.55 "Atkinson Hyperlegible",system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:20px 16px 48px}
+header{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+h1{font-size:1.9em;line-height:1.15;margin:.2em 0}
+h2{font-size:1.15em;margin:1.4em 0 .5em}
+p.lead{color:var(--mute);margin:.2em 0 1em;max-width:60ch}
+.tools{display:flex;gap:8px}
+button,.btn{font:inherit;min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button[aria-pressed=true],.chips label.on{background:var(--acc);color:var(--accInk);border-color:var(--acc)}
+.chips label{min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--line);background:var(--card);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.chips input{width:18px;height:18px}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:6px 16px 16px;margin-top:16px}
+.res{border-top:1px solid var(--line);padding:14px 0}
+.res:first-child{border-top:0}
+.res h3{margin:0 0 4px;font-size:1.1em}
+.tag{display:inline-block;background:var(--hi);padding:1px 8px;border-radius:6px;font-size:.85em;margin-right:6px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.btn.p{background:var(--acc);color:var(--accInk);border-color:var(--acc)}
+.help{margin-top:18px;padding:12px 16px;border-left:6px solid var(--acc);background:var(--card)}
+small{color:var(--mute)}
+@media (prefers-reduced-motion:no-preference){.res{animation:f .25s ease}@keyframes f{from{opacity:0}to{opacity:1}}}
+
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+nav a{min-height:44px;padding:8px 14px;border-radius:10px;border:2px solid var(--line);color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;background:var(--card)}
+section.blk{margin-top:44px}
+.bar{display:grid;grid-template-columns:120px 1fr 56px;gap:8px;align-items:center;margin:6px 0}
+.bar i{display:block;height:20px;border-radius:6px;background:var(--acc)}
+.bar.tx i{background:#d99a16}
+.bar.us i{background:var(--mute)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.stat{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat b{font-size:2em;display:block}
+ol.how{padding-left:1.2em}
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Site"><a href="#finder">Find help</a><a href="#research">Research</a><a href="#how">How it works</a><a href="#about">About</a></nav>
+<div id="finder"></div>
+<header>
+  <div><h1 id="t"></h1></div>
+  <div class="tools">
+    <button id="lang" aria-label="Change language"></button>
+    <button id="big" aria-pressed="false"></button>
+  </div>
+</header>
+<p class="lead" id="lead"></p>
+
+<h2 id="q1"></h2>
+<div class="chips" id="cats" role="group"></div>
+
+<h2 id="q2"></h2>
+<div class="chips" id="prof"></div>
+
+<div class="panel" id="out" aria-live="polite"></div>
+<div class="help" id="h211"></div>
+
+<section class="blk" id="research"><h2>Why this matters: the research</h2>
+<p class="lead">Help is hardest to reach where need is highest. Texas is above the national average on both food insecurity and lack of health insurance.</p>
+<div class="stats"><div class="stat"><b>16.7%</b>of Texans had no health insurance in 2024, the highest of any state</div><div class="stat"><b>8.2%</b>national uninsured rate in 2024, up from 7.9% in 2023</div><div class="stat"><b>2.8%</b>Massachusetts, the lowest state rate</div></div>
+<h3>Household food insecurity by state, 2021-23</h3><div class="bar "><span>Arkansas</span><i style="width:100%"></i><b>18.9%</b></div><div class="bar tx"><span>Texas</span><i style="width:89%"></i><b>16.9%</b></div><div class="bar "><span>Mississippi</span><i style="width:86%"></i><b>16.2%</b></div><div class="bar "><span>Louisiana</span><i style="width:86%"></i><b>16.2%</b></div><div class="bar "><span>Oklahoma</span><i style="width:81%"></i><b>15.4%</b></div><div class="bar "><span>Kentucky</span><i style="width:77%"></i><b>14.5%</b></div><div class="bar "><span>South Carolina</span><i style="width:76%"></i><b>14.4%</b></div><div class="bar "><span>Georgia</span><i style="width:68%"></i><b>12.8%</b></div><div class="bar us"><span>U.S. average</span><i style="width:65%"></i><b>12.2%</b></div><div class="bar "><span>New Hampshire</span><i style="width:39%"></i><b>7.4%</b></div>
+<p><small>Sources: USDA Economic Research Service (food insecurity); U.S. Census Bureau American Community Survey 2024 via America's Health Rankings (uninsured). Texas food insecurity from a Texas A&amp;M summary of USDA data. <a href="https://ers.usda.gov/data-products/charts-of-note/109916" target="_blank" rel="noopener">USDA source</a></small></p></section>
+<section class="blk" id="how"><h2>How it works</h2>
+<ol class="how"><li>Choose English or Español.</li><li>Tap what you need: food, health care, jobs, housing, or learning.</li><li>Check any boxes that describe you. This is optional.</li><li>See results ranked as "You likely qualify" or "Open to everyone".</li><li>Tap Get directions or visit the website. Call 2-1-1 if you are still stuck.</li></ol>
+<p>Matching runs in your browser. Each service lists who it is for, and the app compares that with your answers. Nothing is sent or saved.</p></section>
+<section class="blk" id="about"><h2>About this project</h2>
+<p>Austin Help Finder was built by the Westwood Computer Science Club for WarriorHacks 2.0. Listings are examples for the prototype: check each organization's website for current hours and rules.</p>
+<p><b>Keeping it running:</b> hosting is free, and the service list is one data array that volunteers and nonprofit partners can update. To use it in another city or state, replace the data.</p></section>
+<p><small id="foot"></small></p>
+</main>
+
+<script>
+const T={
+en:{t:"Austin Help Finder",lead:"Find free and low-cost help near you in a few taps: food, health care, jobs, and more. No sign-up. We do not store your answers.",q1:"What do you need help with?",q2:"Does any of this describe you? (optional)",
+cats:{food:"Food",health:"Health care",jobs:"Jobs",housing:"Housing",learn:"Learning and internet"},
+prof:{low:"Low income",unins:"No health insurance",senior:"Age 60 or older",kids:"Have children at home"},
+res:"Results",none:"Pick at least one need above to see results.",open:"Open to everyone",likely:"You likely qualify",dir:"Get directions",site:"Visit website",big:"Larger text",lang:"Español",
+h:"Need help right now? Call 2-1-1 (free, 24/7, many languages). In a crisis, call or text 988.",foot:"Prototype for WarriorHacks 2.0. Listings are examples: check each website for current hours and rules before you go.",found:n=>n+" places found"},
+es:{t:"Buscador de Ayuda de Austin",lead:"Encuentra ayuda gratis o de bajo costo cerca de ti: comida, salud, empleo y más. Sin registro. No guardamos tus respuestas.",q1:"¿Con qué necesitas ayuda?",q2:"¿Alguna de estas opciones te describe? (opcional)",
+cats:{food:"Comida",health:"Salud",jobs:"Empleo",housing:"Vivienda",learn:"Aprendizaje e internet"},
+prof:{low:"Ingresos bajos",unins:"Sin seguro médico",senior:"60 años o más",kids:"Tengo hijos en casa"},
+res:"Resultados",none:"Elige al menos una necesidad para ver resultados.",open:"Abierto a todos",likely:"Probablemente calificas",dir:"Cómo llegar",site:"Sitio web",big:"Texto más grande",lang:"English",
+h:"¿Necesitas ayuda ahora? Llama al 2-1-1 (gratis, 24/7, varios idiomas). En una crisis, llama o envía un texto al 988.",foot:"Prototipo para WarriorHacks 2.0. Los datos son ejemplos: revisa el sitio web para horarios y requisitos actuales.",found:n=>n+" lugares encontrados"}
+};
+const D=[
+{c:"food",req:[],n:"Central Texas Food Bank",d:{en:"Free groceries through partner pantries across the region. Use the site to find a pantry near you.",es:"Comida gratis en despensas de la región. Usa el sitio para encontrar una cerca de ti."},u:"https://www.centraltexasfoodbank.org",q:"Central Texas Food Bank Austin"},
+{c:"food",req:["kids","low"],n:"WIC (Texas)",d:{en:"Healthy food and nutrition support for pregnant people, new parents, and children under 5.",es:"Alimentos y apoyo nutricional para embarazadas, madres recientes y niños menores de 5 años."},u:"https://texaswic.org",q:"WIC clinic Austin TX"},
+{c:"food",req:["low"],n:"SNAP food benefits",d:{en:"Monthly benefits to buy groceries. Apply online through Your Texas Benefits.",es:"Beneficios mensuales para comprar alimentos. Solicita en línea en Your Texas Benefits."},u:"https://www.yourtexasbenefits.com",q:"HHSC benefits office Austin TX"},
+{c:"health",req:["low","unins"],n:"CommUnityCare Health Centers",d:{en:"Low-cost primary care, dental, and pharmacy with fees based on income.",es:"Atención médica, dental y farmacia de bajo costo según tus ingresos."},u:"https://www.communitycaretx.org",q:"CommUnityCare clinic Austin TX"},
+{c:"health",req:["senior"],n:"Meals on Wheels Central Texas",d:{en:"Home-delivered meals and wellness checks for older adults.",es:"Comidas a domicilio y visitas de bienestar para adultos mayores."},u:"https://www.mealsonwheelscentraltexas.org",q:"Meals on Wheels Central Texas Austin"},
+{c:"jobs",req:[],n:"Workforce Solutions Capital Area",d:{en:"Free job search help, resume support, and training programs.",es:"Ayuda gratis para buscar empleo, currículum y programas de capacitación."},u:"https://www.wfscapitalarea.com",q:"Workforce Solutions Capital Area Austin"},
+{c:"jobs",req:["low"],n:"Skills training and certificates",d:{en:"Subsidized training for in-demand jobs for people with limited income.",es:"Capacitación subsidiada para empleos en demanda para personas con ingresos limitados."},u:"https://www.wfscapitalarea.com",q:"job training center Austin TX"},
+{c:"housing",req:["low"],n:"Foundation Communities",d:{en:"Affordable homes, free tax help, and financial coaching for low-income families.",es:"Viviendas asequibles, ayuda gratis con impuestos y asesoría financiera para familias de bajos ingresos."},u:"https://foundcom.org",q:"Foundation Communities Austin TX"},
+{c:"housing",req:[],n:"Texas RioGrande Legal Aid",d:{en:"Free legal help with eviction, housing problems, and benefits for people who qualify.",es:"Ayuda legal gratis con desalojos, vivienda y beneficios para quienes califican."},u:"https://www.trla.org",q:"Texas RioGrande Legal Aid Austin"},
+{c:"learn",req:[],n:"Austin Public Library",d:{en:"Free computers, Wi-Fi, English classes, and homework help for all ages.",es:"Computadoras, Wi-Fi, clases de inglés y ayuda con tareas gratis para todas las edades."},u:"https://library.austintexas.gov",q:"Austin Public Library branch"}
+];
+const S={lang:"en",cats:new Set(),prof:new Set(),big:false};
+const $=i=>document.getElementById(i);
+function render(){
+ const t=T[S.lang];document.documentElement.lang=S.lang;document.title=t.t;
+ $("t").textContent=t.t;$("lead").textContent=t.lead;$("q1").textContent=t.q1;$("q2").textContent=t.q2;
+ $("lang").textContent=t.lang;$("big").textContent=t.big;$("big").setAttribute("aria-pressed",S.big);
+ document.body.style.setProperty("--fs",S.big?1.25:1);
+ $("h211").textContent=t.h;$("foot").textContent=t.foot;
+ $("cats").innerHTML="";
+ for(const k in t.cats){const b=document.createElement("button");b.textContent=t.cats[k];b.setAttribute("aria-pressed",S.cats.has(k));
+  b.onclick=()=>{S.cats.has(k)?S.cats.delete(k):S.cats.add(k);render()};$("cats").append(b)}
+ $("prof").innerHTML="";
+ for(const k in t.prof){const l=document.createElement("label");const i=document.createElement("input");i.type="checkbox";i.checked=S.prof.has(k);
+  l.className=i.checked?"on":"";i.onchange=()=>{i.checked?S.prof.add(k):S.prof.delete(k);render()};l.append(i,t.prof[k]);$("prof").append(l)}
+ const o=$("out");
+ if(!S.cats.size){o.innerHTML="<p>"+t.none+"</p>";return}
+ const m=D.filter(r=>S.cats.has(r.c)&&(r.req.length==0||r.req.some(x=>S.prof.has(x))));
+ m.sort((a,b)=>(a.req.length?0:1)-(b.req.length?0:1));
+ o.innerHTML="<h2>"+t.res+" <small>("+t.found(m.length)+")</small></h2>";
+ m.forEach(r=>{
+  const e=document.createElement("div");e.className="res";
+  const h=document.createElement("h3");h.textContent=r.n;
+  const g=document.createElement("span");g.className="tag";g.textContent=r.req.length?t.likely:t.open;
+  const p=document.createElement("p");p.style.margin="4px 0";p.textContent=r.d[S.lang];
+  const a=document.createElement("div");a.className="acts";
+  const d=document.createElement("a");d.className="btn p";d.textContent=t.dir;d.target="_blank";d.rel="noopener";
+  d.href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(r.q);
+  const w=document.createElement("a");w.className="btn";w.textContent=t.site;w.target="_blank";w.rel="noopener";w.href=r.u;
+  a.append(d,w);e.append(g,h,p,a);o.append(e)});
+}
+$("lang").onclick=()=>{S.lang=S.lang=="en"?"es":"en";render()};
+$("big").onclick=()=>{S.big=!S.big;render()};
+render();
+</script>
+</body>
+</html>
